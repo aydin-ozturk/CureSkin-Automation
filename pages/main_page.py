@@ -11,6 +11,7 @@ class MainPage(Page):
     SEARCH_INPUT = (By.ID, "Search-In-Modal")
     BY_CATEGORY = (By.XPATH, "//details[@id='Details-HeaderMenu-3']")
     ALL_CATEGORIES = (By.XPATH, "//ul[@id='HeaderMenu-MenuList-3']//li")
+    PROFILE_ICON = (By.XPATH, "//a[@class='header__icon header__icon--account link focus-inset small-hide']")
 
     def open_main_page(self):
         self.open_url()
@@ -31,5 +32,7 @@ class MainPage(Page):
                 locator_index = n
         self.find_elements(*self.ALL_CATEGORIES)[locator_index].click()
 
+    def click_on_profile_icon(self):
+        self.click(*self.PROFILE_ICON)
 
 
