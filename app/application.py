@@ -3,6 +3,7 @@ from pages.search_results_page import SearchResultsPage
 from pages.collections_page import CollectionsPage
 from pages.login_page import LoginPage
 from pages.product_details_page import ProductDetailsPage
+from pages.cart_page import CartPage
 
 
 class Application:
@@ -14,3 +15,4 @@ class Application:
         self.collections_page = CollectionsPage(self.driver)
         self.login_page = LoginPage(self.driver)
         self.product_details_page = ProductDetailsPage(self.driver)
+        self.cart_page = CartPage(self.driver)

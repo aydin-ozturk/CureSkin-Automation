@@ -7,8 +7,12 @@ class ProductDetailsPage(Page):
     PRICE = (By.XPATH, "//*[contains(@id,'price')]//*[@class='price-item price-item--sale price-item--last']")
     REVIEWS = (By.XPATH, "//div[@id='judgeme_product_reviews']//h2[@class='jdgm-rev-widg__title']")
     QUANTITY = (By.XPATH, "//div[@class='product-form__input product-form__quantity']/label")
-    ADD_TO_CART = (By.XPATH, "//button[@name='add']")
-    BUY_IT_NOW = (By.XPATH, "//button[contains(text(),'Buy it now')]")
+    ADD_TO_CART_BTN = (By.XPATH, "//button[@name='add']")
+    BUY_IT_NOW_BTN = (By.XPATH, "//button[contains(text(),'Buy it now')]")
+    CART = (By.ID, "cart-icon-bubble")
+    QUANTITY_INPUT = (By.XPATH, "//input[@class='quantity__input']")
+    CHECK_OUT_BTN = (By.XPATH, "//button[@name='checkout']")
+    CART_COUNT = (By.XPATH, "//a[@id='cart-icon-bubble']//span[contains(text(),'item')]")
 
     def verify_ui_elements_present(self):
         # Verifying product image presence
@@ -24,10 +28,15 @@ class ProductDetailsPage(Page):
         self.verify_element_text("Quantity", *self.QUANTITY)
 
         # Verifying add to cart button presence
-        self.find_element(*self.ADD_TO_CART)
+        self.find_element(*self.ADD_TO_CART_BTN)
 
         # Verifying buy it now button presence
-        self.find_element(*self.BUY_IT_NOW)
+        self.find_element(*self.BUY_IT_NOW_BTN)
 
+    def click_add_to_cart(self):
+        self.click(*self.ADD_TO_CART_BTN)
 
+    def click_on_cart(self):
+        self.wait_for_element_appear(*self.CART_COUNT)
+        self.click(*self.CART)
 
