@@ -12,6 +12,7 @@ class MainPage(Page):
     BY_CATEGORY = (By.XPATH, "//details[@id='Details-HeaderMenu-3']")
     ALL_CATEGORIES = (By.XPATH, "//ul[@id='HeaderMenu-MenuList-3']//li")
     PROFILE_ICON = (By.XPATH, "//a[@class='header__icon header__icon--account link focus-inset small-hide']")
+    SEARCH_OPTION = (By.ID, "predictive-search-option-1")
 
     def open_main_page(self):
         self.open_url()
@@ -34,5 +35,13 @@ class MainPage(Page):
 
     def click_on_profile_icon(self):
         self.click(*self.PROFILE_ICON)
+
+    def open_product_details(self, complete_product_name):
+        self.open_url()
+        self.click(*self.SEARCH_ICON)
+        self.input_text(complete_product_name, *self.SEARCH_INPUT)
+        self.wait_for_element_appear(*self.SEARCH_OPTION)
+        self.driver.find_element(*self.SEARCH_INPUT).send_keys(Keys.ARROW_DOWN, Keys.ENTER)
+
 
 

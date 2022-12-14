@@ -6,6 +6,11 @@ def step_impl(context):
     context.app.main_page.open_main_page()
 
 
+@given('Open Product Details page of {complete_product_name}')
+def step_impl(context, complete_product_name):
+    context.app.main_page.open_product_details(complete_product_name)
+
+
 @when('Search for "{product}"')
 def step_impl(context, product):
     context.app.main_page.search(product)
