@@ -13,6 +13,8 @@ class MainPage(Page):
     ALL_CATEGORIES = (By.XPATH, "//ul[@id='HeaderMenu-MenuList-3']//li")
     PROFILE_ICON = (By.XPATH, "//a[@class='header__icon header__icon--account link focus-inset small-hide']")
     SEARCH_OPTION = (By.ID, "predictive-search-option-1")
+    DRP_SEARCH_RESULTS = (By.CSS_SELECTOR, ".predictive-search__item-content")
+    DRP_SEARCH_BTN = (By.XPATH, "//button[contains(@class,'predictive-search__item')]")
 
     def open_main_page(self):
         self.open_url()
@@ -43,5 +45,12 @@ class MainPage(Page):
         self.wait_for_element_appear(*self.SEARCH_OPTION)
         self.driver.find_element(*self.SEARCH_INPUT).send_keys(Keys.ARROW_DOWN, Keys.ENTER)
 
+    def input_text_into_search_field(self, product):
+        self.click(*self.SEARCH_ICON)
+        self.input_text(product, *self.SEARCH_INPUT)
 
+    def verify_no_drp_search_results(self):
+        self.wait.until(EC.invisibility_of_element(self.DRP_SEARCH_RESULTS))
 
+    def click_on_drp_search_btn(self):
+        self.click(*self.DRP_SEARCH_BTN)

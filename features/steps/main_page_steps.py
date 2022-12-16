@@ -29,3 +29,18 @@ def step_impl(context, category_name):
 @when('Click on profile icon')
 def step_impl(context):
     context.app.main_page.click_on_profile_icon()
+
+
+@when('Enter a product name that does not exist to search box: "{product}"')
+def step_impl(context, product):
+    context.app.main_page.input_text_into_search_field(product)
+
+
+@when('Click on search button on the drop-down')
+def step_impl(context):
+    context.app.main_page.click_on_drp_search_btn()
+
+
+@then('Verify no results returned on the drop-down')
+def step_impl(context):
+    context.app.main_page.verify_no_drp_search_results()
