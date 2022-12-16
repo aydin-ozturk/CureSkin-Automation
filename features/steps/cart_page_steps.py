@@ -19,3 +19,13 @@ def step_impl(context):
 @then('Verify that product quantity is set to 2')
 def step_impl(context):
     context.app.cart_page.verify_product_quantity()
+
+
+@then('Verify all products are in the cart')
+def step_impl(context):
+    context.app.cart_page.verify_all_products_in_cart()
+
+
+@then('Verify total price is correct')
+def step_impl(context):
+    context.app.cart_page.verify_total_cart_price()

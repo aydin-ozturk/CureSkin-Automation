@@ -1,8 +1,13 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import Page
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class ProductDetailsPage(Page):
+    product_price_1 = None
+    product_price_2 = None
+    product_name_1 = None
+    product_name_2 = None
     PROD_IMG = (By.XPATH, "//li[1]//modal-opener[1]//div[1]//img[1]")
     PRICE = (By.XPATH, "//*[contains(@id,'price')]//*[@class='price-item price-item--sale price-item--last']")
     REVIEWS = (By.XPATH, "//div[@id='judgeme_product_reviews']//h2[@class='jdgm-rev-widg__title']")
@@ -10,9 +15,8 @@ class ProductDetailsPage(Page):
     ADD_TO_CART_BTN = (By.XPATH, "//button[@name='add']")
     BUY_IT_NOW_BTN = (By.XPATH, "//button[contains(text(),'Buy it now')]")
     CART = (By.ID, "cart-icon-bubble")
-    QUANTITY_INPUT = (By.XPATH, "//input[@class='quantity__input']")
-    CHECK_OUT_BTN = (By.XPATH, "//button[@name='checkout']")
-    CART_COUNT = (By.XPATH, "//a[@id='cart-icon-bubble']//span[contains(text(),'item')]")
+    CART_POP_UP_IMG = (By.XPATH, "//img[@class='cart-notification-product__image']")
+    PROD_NAME = (By.XPATH, "//h1[@class='product__title']")
 
     def verify_ui_elements_present(self):
         # Verifying product image presence
@@ -35,8 +39,19 @@ class ProductDetailsPage(Page):
 
     def click_add_to_cart(self):
         self.click(*self.ADD_TO_CART_BTN)
+        self.wait.until(EC.presence_of_element_located(self.CART_POP_UP_IMG))
 
     def click_on_cart(self):
-        self.wait_for_element_appear(*self.CART_COUNT)
         self.click(*self.CART)
 
+    def store_first_product_price(self):
+        self.driver.product_price_1 = float(self.find_element(*self.PRICE).text[4:])
+
+    def store_second_product_price(self):
+        self.driver.product_price_2 = float(self.find_element(*self.PRICE).text[4:])
+
+    def store_first_product_name(self):
+        self.driver.product_name_1 = self.find_element(*self.PROD_NAME).text
+
+    def store_second_product_name(self):
+        self.driver.product_name_2 = self.find_element(*self.PROD_NAME).text

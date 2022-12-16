@@ -1,15 +1,17 @@
 from selenium.webdriver.common.by import By
 from pages.base_page import Page
-from selenium.webdriver.support import expected_conditions as EC
-
 
 
 class CartPage(Page):
+    stored_total_product_price = None
     PLUS_ICON = (By.NAME, "plus")
     PRODUCT_QTY_1 = (By.ID, "Quantity-1")
     PRODUCT_TOTAL = (By.XPATH, "//table[@class='cart-items']/tbody//tr[1]//*[@class='cart-item__totals right small-hide']")
     NEW_SUBTOTAL_HIDDEN = (By.XPATH, "//p[contains(text(),'New subtotal')]")
-    stored_total_product_price = None
+    SUBTOTAL = (By.XPATH, "//p[@class='totals__subtotal-value']")
+    CART_COUNT = (By.XPATH, "//span[normalize-space()='2']")
+    FIRST_PROD_NAME = (By.XPATH, "//tr[@id='CartItem-2']/td[2]/a")
+    SECOND_PROD_NAME = (By.XPATH, "//tr[@id='CartItem-1']/td[2]/a")
 
     def store_cart_total(self):
         self.stored_total_product_price = float(self.find_element(*self.PRODUCT_TOTAL).text[4:])
@@ -29,3 +31,16 @@ class CartPage(Page):
         quantity = 2
         updated_quantity = int(self.driver.find_element(*self.PRODUCT_QTY_1).get_attribute("value"))
         assert updated_quantity == quantity, f"Expected, {quantity} but got {updated_quantity}"
+
+    def verify_all_products_in_cart(self):
+        assert self.find_element(*self.FIRST_PROD_NAME).text == self.driver.product_name_1, \
+            f"{self.driver.product_name_1} is not in cart"
+
+        assert self.find_element(*self.SECOND_PROD_NAME).text == self.driver.product_name_2,\
+            f"{self.driver.product_name_2} is not in cart"
+
+    def verify_total_cart_price(self):
+        cart_subtotal = float(self.find_element(*self.SUBTOTAL).text[4:])
+        assert cart_subtotal == self.driver.product_price_1 + self.driver.product_price_2, \
+            f"Incorrect cart total \
+            \nExpected {self.driver.product_price_1 + self.driver.product_price_2} but got {cart_subtotal}"
