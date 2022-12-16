@@ -12,6 +12,7 @@ class CartPage(Page):
     CART_COUNT = (By.XPATH, "//span[normalize-space()='2']")
     FIRST_PROD_NAME = (By.XPATH, "//tr[@id='CartItem-2']/td[2]/a")
     SECOND_PROD_NAME = (By.XPATH, "//tr[@id='CartItem-1']/td[2]/a")
+    VIEW_ALL_BTN = (By.XPATH, "//a[@aria-label='View all products in the Products collection']")
 
     def store_cart_total(self):
         self.stored_total_product_price = float(self.find_element(*self.PRODUCT_TOTAL).text[4:])
@@ -44,3 +45,9 @@ class CartPage(Page):
         assert cart_subtotal == self.driver.product_price_1 + self.driver.product_price_2, \
             f"Incorrect cart total \
             \nExpected {self.driver.product_price_1 + self.driver.product_price_2} but got {cart_subtotal}"
+
+    def open_cart_page(self):
+        self.open_url("cart")
+
+    def click_on_view_all_btn(self):
+        self.click(*self.VIEW_ALL_BTN)

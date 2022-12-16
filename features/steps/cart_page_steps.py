@@ -1,6 +1,11 @@
 from behave import given, when, then
 
 
+@given('Open cart page')
+def step_impl(context):
+    context.app.cart_page.open_cart_page()
+
+
 @when('Store the current price')
 def step_impl(context):
     context.app.cart_page.store_cart_total()
@@ -9,6 +14,11 @@ def step_impl(context):
 @when('Click plus icon to increase product quantity')
 def step_impl(context):
     context.app.cart_page.click_on_plus_icon()
+
+
+@when('Click on view all button')
+def step_impl(context):
+    context.app.cart_page.click_on_view_all_btn()
 
 
 @then('Verify total price has doubled')

@@ -21,3 +21,8 @@ Feature: Test cases for shopping cart
     And Open cart page
     Then Verify all products are in the cart
     And Verify total price is correct
+
+  Scenario: Users can see all products by clicking on View All button in cart page
+    Given Open cart page
+    When Click on view all button
+    Then Verify All Products Page is opened
