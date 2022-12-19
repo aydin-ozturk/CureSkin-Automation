@@ -12,6 +12,7 @@ class CartPage(Page):
     CART_COUNT = (By.XPATH, "//span[normalize-space()='2']")
     FIRST_PROD_NAME = (By.XPATH, "//tr[@id='CartItem-2']/td[2]/a")
     SECOND_PROD_NAME = (By.XPATH, "//tr[@id='CartItem-1']/td[2]/a")
+    ALL_PRODUCTS = (By.XPATH, "//tr[@class='cart-item']//td[@class='cart-item__details']/a")
     VIEW_ALL_BTN = (By.XPATH, "//a[@aria-label='View all products in the Products collection']")
 
     def store_cart_total(self):
@@ -34,17 +35,18 @@ class CartPage(Page):
         assert updated_quantity == quantity, f"Expected, {quantity} but got {updated_quantity}"
 
     def verify_all_products_in_cart(self):
-        assert self.find_element(*self.FIRST_PROD_NAME).text == self.driver.product_name_1, \
-            f"{self.driver.product_name_1} is not in cart"
-
-        assert self.find_element(*self.SECOND_PROD_NAME).text == self.driver.product_name_2,\
-            f"{self.driver.product_name_2} is not in cart"
+        all_products = self.find_elements(*self.ALL_PRODUCTS)
+        product_names = []
+        for product in all_products:
+            product_names.insert(0, product.text)
+        assert product_names == self.driver.product_names, f"Product names do not match \
+        \nExpected {self.driver.product_names} but got {product_names}"
 
     def verify_total_cart_price(self):
         cart_subtotal = float(self.find_element(*self.SUBTOTAL).text[4:])
-        assert cart_subtotal == self.driver.product_price_1 + self.driver.product_price_2, \
+        assert cart_subtotal == self.driver.total_price, \
             f"Incorrect cart total \
-            \nExpected {self.driver.product_price_1 + self.driver.product_price_2} but got {cart_subtotal}"
+            \nExpected {self.driver.total_price} but got {cart_subtotal}"
 
     def open_cart_page(self):
         self.open_url("cart")
