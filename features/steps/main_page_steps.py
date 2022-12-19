@@ -41,6 +41,11 @@ def step_impl(context):
     context.app.main_page.click_on_drp_search_btn()
 
 
+@when('Click on Shop All in the footer')
+def step_impl(context):
+    context.app.main_page.click_on_shop_all()
+
+
 @then('Verify no results returned on the drop-down')
 def step_impl(context):
     context.app.main_page.verify_no_drp_search_results()

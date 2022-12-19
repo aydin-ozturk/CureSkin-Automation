@@ -15,6 +15,7 @@ class ProductDetailsPage(Page):
     CART = (By.ID, "cart-icon-bubble")
     CART_POP_UP_IMG = (By.XPATH, "//img[@class='cart-notification-product__image']")
     PROD_NAME = (By.XPATH, "//h1[@class='product__title']")
+    CART_COUNT_BUBBLE = (By.XPATH, "//div[@class='cart-count-bubble']")
 
     def verify_ui_elements_present(self):
         # Verifying product image presence
@@ -49,3 +50,9 @@ class ProductDetailsPage(Page):
     def store_product_names(self):
         self.product_names.append(self.find_element(*self.PROD_NAME).text)
         self.driver.product_names = self.product_names
+
+    def verify_product_count_on_cart_icon(self):
+        self.wait_for_element_appear(*self.CART_COUNT_BUBBLE)
+
+    def navigate_back(self):
+        self.driver.back()

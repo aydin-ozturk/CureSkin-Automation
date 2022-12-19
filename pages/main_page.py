@@ -15,6 +15,7 @@ class MainPage(Page):
     SEARCH_OPTION = (By.ID, "predictive-search-option-1")
     DRP_SEARCH_RESULTS = (By.CSS_SELECTOR, ".predictive-search__item-content")
     DRP_SEARCH_BTN = (By.XPATH, "//button[contains(@class,'predictive-search__item')]")
+    SHOP_ALL = (By.XPATH, "//a[@class='header__menu-item header__menu-item list-menu__item link link--text focus-inset']")
 
     def open_main_page(self):
         self.open_url()
@@ -54,3 +55,6 @@ class MainPage(Page):
 
     def click_on_drp_search_btn(self):
         self.click(*self.DRP_SEARCH_BTN)
+
+    def click_on_shop_all(self):
+        self.click(*self.SHOP_ALL)
