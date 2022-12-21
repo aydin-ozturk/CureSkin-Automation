@@ -58,7 +58,6 @@ class MainPage(Page):
         self.wait_for_element_appear(*self.SEARCH_OPTION)
         self.wait_for_element_appear(*self.DRP_PRODUCT_NAME)
         self.driver.find_element(*self.SEARCH_INPUT).send_keys(Keys.ARROW_DOWN, Keys.RETURN)
-        # sleep(1)
 
     def input_text_into_search_field(self, product):
         self.click(*self.SEARCH_ICON)
