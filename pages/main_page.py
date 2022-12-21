@@ -12,16 +12,27 @@ class MainPage(Page):
     BY_CATEGORY = (By.XPATH, "//details[@id='Details-HeaderMenu-3']")
     ALL_CATEGORIES = (By.XPATH, "//ul[@id='HeaderMenu-MenuList-3']//li")
     PROFILE_ICON = (By.XPATH, "//a[@class='header__icon header__icon--account link focus-inset small-hide']")
-    SEARCH_OPTION = (By.ID, "predictive-search-option-1")
+    SEARCH_OPTION = (By.XPATH, "//li[@id='predictive-search-option-1']//div[@class='predictive-search__item-content']")
+    DRP_PRODUCT_NAME = (By.XPATH, "//h3[@class='predictive-search__item-heading h5']")
     DRP_SEARCH_RESULTS = (By.CSS_SELECTOR, ".predictive-search__item-content")
     DRP_SEARCH_BTN = (By.XPATH, "//button[contains(@class,'predictive-search__item')]")
     SHOP_ALL = (By.XPATH, "//a[@class='header__menu-item header__menu-item list-menu__item link link--text focus-inset']")
+    POP_UP_MAGNIFYING_ICON = (By.XPATH, "//button[@aria-label='Search']")
+    CHAT_FRAME = (By.XPATH, "//iframe[@id='dummy-chat-button-iframe']")
+    CHAT_MSG_COUNT = (By.XPATH, "//span[@id='notification-badge' and @style='visibility: visible;']")
+
+    def wait_for_chat_popup(self):
+        chat_frame = self.find_element(*self.CHAT_FRAME)
+        self.driver.switch_to.frame(chat_frame)
+        self.wait_for_element_appear(*self.CHAT_MSG_COUNT)
+        self.driver.switch_to.default_content()
 
     def open_main_page(self):
         self.open_url()
 
     def search(self, product):
         self.click(*self.SEARCH_ICON)
+        self.wait_for_element_appear(*self.POP_UP_MAGNIFYING_ICON)
         self.input_text(product, *self.SEARCH_INPUT)
         self.driver.find_element(*self.SEARCH_INPUT).send_keys(Keys.ENTER)
 
@@ -41,10 +52,13 @@ class MainPage(Page):
 
     def open_product_details(self, complete_product_name):
         self.open_url()
+        self.wait_for_chat_popup()
         self.click(*self.SEARCH_ICON)
         self.input_text(complete_product_name, *self.SEARCH_INPUT)
         self.wait_for_element_appear(*self.SEARCH_OPTION)
-        self.driver.find_element(*self.SEARCH_INPUT).send_keys(Keys.ARROW_DOWN, Keys.ENTER)
+        self.wait_for_element_appear(*self.DRP_PRODUCT_NAME)
+        self.driver.find_element(*self.SEARCH_INPUT).send_keys(Keys.ARROW_DOWN, Keys.RETURN)
+        # sleep(1)
 
     def input_text_into_search_field(self, product):
         self.click(*self.SEARCH_ICON)

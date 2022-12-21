@@ -16,16 +16,23 @@ class ProductDetailsPage(Page):
     CART_POP_UP_IMG = (By.XPATH, "//img[@class='cart-notification-product__image']")
     PROD_NAME = (By.XPATH, "//h1[@class='product__title']")
     CART_COUNT_BUBBLE = (By.XPATH, "//div[@class='cart-count-bubble']")
+    CHAT_FRAME = (By.XPATH, "//iframe[@id='dummy-chat-button-iframe']")
+    CHAT_MSG_COUNT = (By.XPATH, "//span[@id='notification-badge' and @style='visibility: visible;']")
+
+    def wait_for_chat_popup(self):
+        chat_frame = self.find_element(*self.CHAT_FRAME)
+        self.driver.switch_to.frame(chat_frame)
+        self.wait_for_element_appear(*self.CHAT_MSG_COUNT)
+        self.driver.switch_to.default_content()
 
     def verify_ui_elements_present(self):
+        self.wait_for_chat_popup()
+
         # Verifying product image presence
         self.find_element(*self.PROD_IMG)
 
         # Verifying product price presence
         self.verify_partial_text("Rs", *self.PRICE)
-
-        # Verifying product reviews presence
-        self.verify_element_text("Customer Reviews", *self.REVIEWS)
 
         # Verifying product quantity presence
         self.verify_element_text("Quantity", *self.QUANTITY)
@@ -36,7 +43,12 @@ class ProductDetailsPage(Page):
         # Verifying buy it now button presence
         self.find_element(*self.BUY_IT_NOW_BTN)
 
+        # Verifying product reviews presence
+        self.verify_element_text("Customer Reviews", *self.REVIEWS)
+
     def click_add_to_cart(self):
+        self.wait_for_chat_popup()
+        self.wait_for_element_appear(*self.BUY_IT_NOW_BTN)
         self.click(*self.ADD_TO_CART_BTN)
         self.wait.until(EC.presence_of_element_located(self.CART_POP_UP_IMG))
 

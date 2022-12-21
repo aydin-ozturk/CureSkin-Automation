@@ -15,18 +15,17 @@ def browser_init(context, test_name):
     :param test_name: scenario.name
     """
     # context.driver = webdriver.Chrome()
-    # context.driver = webdriver.Firefox()
+    context.driver = webdriver.Firefox()
     # context.driver = webdriver.Firefox(executable_path=r'C:\Users\brant\AppData\Local\Programs\Python\Python310\Scripts\geckodriver.exe')
     # context.driver = webdriver.Safari()
 
     ###############################################################################################################
     ## HEADLESS MODE ####
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    context.driver = webdriver.Chrome(
-        chrome_options=options,
-        executable_path='/Users/12-python-selenium-automation/chromedriver'
-    )
+    # options = webdriver.ChromeOptions()
+    # options.add_argument('--headless')
+    # context.driver = webdriver.Chrome(
+    #     chrome_options=options,
+    #     executable_path='/Users/12-python-selenium-automation/chromedriver')
     ###############################################################################################################
 
     ###############################################################################################################
