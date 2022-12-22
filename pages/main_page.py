@@ -64,7 +64,8 @@ class MainPage(Page):
         self.input_text(product, *self.SEARCH_INPUT)
 
     def verify_no_drp_search_results(self):
-        self.wait.until(EC.invisibility_of_element(self.DRP_SEARCH_RESULTS))
+        self.wait.until(EC.invisibility_of_element(self.DRP_SEARCH_RESULTS),
+                        message="Expected no results returned on the drop-down but got some results")
 
     def click_on_drp_search_btn(self):
         self.click(*self.DRP_SEARCH_BTN)

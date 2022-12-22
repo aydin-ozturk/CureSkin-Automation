@@ -30,14 +30,14 @@ class Page:
         print(f'Inputting text: {text}')
 
     def wait_for_element_and_click(self, *locator):
-        e = self.wait.until(EC.element_to_be_clickable(locator))
+        e = self.wait.until(EC.element_to_be_clickable(locator), message=f"{locator} is not clickable")
         e.click()
 
     def wait_for_element_disappear(self, *locator):
-        self.wait.until(EC.invisibility_of_element(locator))
+        self.wait.until(EC.invisibility_of_element(locator), message=f"{locator} did not disappear")
 
     def wait_for_element_appear(self, *locator):
-        return self.wait.until(EC.presence_of_element_located(locator))
+        return self.wait.until(EC.presence_of_element_located(locator), message=f"{locator} did not appear")
 
     def verify_element_text(self, expected_text, *locator):
         actual_text = self.driver.find_element(*locator).text
@@ -50,6 +50,6 @@ class Page:
             f'Expected text {expected_text} is not in {actual_text}'
 
     def verify_url_contains_query(self, query):
-        self.wait.until(EC.url_contains(query))
+        self.wait.until(EC.url_contains(query), message=f"URL did not contain {query}")
 
 
