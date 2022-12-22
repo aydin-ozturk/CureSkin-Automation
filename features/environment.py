@@ -21,12 +21,12 @@ def browser_init(context, test_name):
 
     ###############################################################################################################
     # HEADLESS MODE ####
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
-    options.add_argument("window-size=1700,1000")
-    context.driver = webdriver.Chrome(
-        chrome_options=options,
-        executable_path='/Users/12-python-selenium-automation/chromedriver')
+    # options = webdriver.ChromeOptions()
+    # options.add_argument('--headless')
+    # options.add_argument("window-size=1700,1000")
+    # context.driver = webdriver.Chrome(
+    #     chrome_options=options,
+    #     executable_path='/Users/12-python-selenium-automation/chromedriver')
     ###############################################################################################################
 
     ###############################################################################################################
@@ -38,29 +38,29 @@ def browser_init(context, test_name):
     ###############################################################################################################
 
     ###############################################################################################################
-    # ### Browserstack ###
-    # desired_cap = {
-    #     'bstack:options': {
-    #         "os": "Windows",
-    #         "osVersion": "11",
-    #         "sessionName": test_name,
-    #         "local": "false",
-    #         "seleniumVersion": "4.4.0",
-    #     },
-    #     "browserName": "Firefox",
-    #     "browserVersion": "latest",
-    # }
-    #
-    # #Register for BrowserStack, then grab below from https://www.browserstack.com/accounts/settings
-    # bs_user = 'aydinozturk_lT3Hv2'
-    # bs_key = 'Wk8FtqNhzPwpigKpx3gs'
-    # url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
-    # context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
+    ### Browserstack ###
+    desired_cap = {
+        'bstack:options': {
+            "os": "Windows",
+            "osVersion": "11",
+            "sessionName": test_name,
+            "local": "false",
+            "seleniumVersion": "4.4.0",
+        },
+        "browserName": "Chrome",
+        "browserVersion": "latest",
+    }
+
+    #Register for BrowserStack, then grab below from https://www.browserstack.com/accounts/settings
+    bs_user = 'aydinozturk_lT3Hv2'
+    bs_key = 'Wk8FtqNhzPwpigKpx3gs'
+    url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
+    context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
     ###############################################################################################################
 
     context.driver.maximize_window()
     context.driver.implicitly_wait(5)
-    context.driver.wait = WebDriverWait(context.driver, 10)
+    context.driver.wait = WebDriverWait(context.driver, 20)
 
     context.app = Application(context.driver)
 
