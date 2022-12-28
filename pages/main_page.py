@@ -20,6 +20,9 @@ class MainPage(Page):
     POP_UP_MAGNIFYING_ICON = (By.XPATH, "//button[@aria-label='Search']")
     CHAT_FRAME = (By.XPATH, "//iframe[@id='dummy-chat-button-iframe']")
     CHAT_MSG_COUNT = (By.XPATH, "//span[@id='notification-badge' and @style='visibility: visible;']")
+    HAMBURGER = (By.ID, "Details-menu-drawer-container")
+    HAIR_CATEGORY_MOB = (By.XPATH, "//a[@class='menu-drawer__menu-item link link--text list-menu__item focus-inset'][normalize-space()='Hair']")
+    BY_CAT_MOBILE = (By.XPATH, "//details[@id='Details-menu-drawer-menu-item-3']")
 
     def wait_for_chat_popup(self):
         chat_frame = self.find_element(*self.CHAT_FRAME)
@@ -37,15 +40,20 @@ class MainPage(Page):
         self.driver.find_element(*self.SEARCH_INPUT).send_keys(Keys.ENTER)
 
     def click_on_shop_by_category(self):
-        self.click(*self.BY_CATEGORY)
+        # self.click(*self.BY_CATEGORY)
+        self.click(*self.BY_CAT_MOBILE)
+
+    def click_on_hamburger_menu(self):
+        self.click(*self.HAMBURGER)
 
     def click_on_category_name(self, category_name):
-        all_categories = self.find_elements(*self.ALL_CATEGORIES)
-        locator_index = None
-        for n in range(len(all_categories)):
-            if all_categories[n].text == category_name:
-                locator_index = n
-        self.find_elements(*self.ALL_CATEGORIES)[locator_index].click()
+        # all_categories = self.find_elements(*self.ALL_CATEGORIES)
+        # locator_index = None
+        # for n in range(len(all_categories)):
+        #     if all_categories[n].text == category_name:
+        #         locator_index = n
+        # self.find_elements(*self.ALL_CATEGORIES)[locator_index].click()
+        self.click(*self.HAIR_CATEGORY_MOB)
 
     def click_on_profile_icon(self):
         self.click(*self.PROFILE_ICON)

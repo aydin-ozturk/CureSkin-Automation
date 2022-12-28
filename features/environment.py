@@ -17,7 +17,7 @@ def browser_init(context, test_name):
     :param context: Behave context
     :param test_name: scenario.name
     """
-    context.driver = webdriver.Chrome()
+    # context.driver = webdriver.Chrome()
     # context.driver = webdriver.Firefox()
     # context.driver = webdriver.Firefox(executable_path=r'C:\Users\brant\AppData\Local\Programs\Python\Python310\Scripts\geckodriver.exe')
     # context.driver = webdriver.Safari()
@@ -41,24 +41,22 @@ def browser_init(context, test_name):
     ###############################################################################################################
 
     ###############################################################################################################
-    ### Browserstack ###
-    # desired_cap = {
-    #     'bstack:options': {
-    #         "os": "Windows",
-    #         "osVersion": "11",
-    #         "sessionName": test_name,
-    #         "local": "false",
-    #         "seleniumVersion": "4.4.0",
-    #     },
-    #     "browserName": "Chrome",
-    #     "browserVersion": "latest",
-    # }
-    #
-    # #Register for BrowserStack, then grab below from https://www.browserstack.com/accounts/settings
-    # bs_user = 'aydinozturk_lT3Hv2'
-    # bs_key = 'Wk8FtqNhzPwpigKpx3gs'
-    # url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
-    # context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
+    ## Browserstack ###
+    desired_cap = {
+        'bstack:options': {
+            "osVersion": "10.0",
+            "deviceName": "Samsung Galaxy S20",
+            "appiumVersion": "1.22.0",
+            "local": "false",
+        },
+        "browserName": "chrome",
+    }
+
+    #Register for BrowserStack, then grab below from https://www.browserstack.com/accounts/settings
+    bs_user = 'aydinozturk_lT3Hv2'
+    bs_key = 'Wk8FtqNhzPwpigKpx3gs'
+    url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
+    context.driver = webdriver.Remote(url, desired_capabilities=desired_cap)
     ###############################################################################################################
 
     context.driver.maximize_window()

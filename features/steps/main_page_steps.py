@@ -16,6 +16,11 @@ def step_impl(context, product):
     context.app.main_page.search(product)
 
 
+@when('Click on hamburger menu')
+def step_impl(context):
+    context.app.main_page.click_on_hamburger_menu()
+
+
 @when('Click on "shop by category"')
 def step_impl(context):
     context.app.main_page.click_on_shop_by_category()
